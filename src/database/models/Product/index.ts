@@ -4,7 +4,7 @@ import {DataTypes, Model} from "sequelize";
 import {IProduct, IProductCreation} from "./types";
 import {sequelize} from "../../sequelize";
 import {Category} from "../Category";
-import {ProductType} from "../ProductType";
+import {ProductDimension} from "../ProductDimension";
 
 class Product extends Model<IProduct, IProductCreation> {
 }
@@ -36,10 +36,10 @@ Product.init({
         },
         allowNull: false,
     },
-    productTypeId: {
+    productDimensionId: {
         type: DataTypes.INTEGER,
         references: {
-            model: ProductType,
+            model: ProductDimension,
             key: 'id',
         },
         allowNull: false,

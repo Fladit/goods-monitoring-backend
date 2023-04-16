@@ -5,6 +5,7 @@ config();
 
 import {sequelize} from '../database/sequelize'
 import {dbInit} from "../database/dbInit";
+import {getMilk} from "../parser/perekrestok/milk/getMilk";
 
 const app = express();
 const PORT = process.env.NODE_PORT;
@@ -13,6 +14,12 @@ app.use(json());
 
 app.get('/', (req, res) => {
     res.send('Hello world!');
+})
+
+app.get('/milk', (req, res) => {
+    getMilk().then((milkBody) => {
+        res.send(milkBody);
+    })
 })
 
 dbInit().then(async () => {

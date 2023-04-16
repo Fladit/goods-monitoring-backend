@@ -1,5 +1,5 @@
-import {Category} from "./models/Category";
-import {ProductType} from "./models/ProductType";
+import {Category, initDefaultCategories} from "./models/Category";
+import {initProductDimensions, ProductDimension} from "./models/ProductDimension";
 import {City} from "./models/City";
 import {User} from "./models/User";
 import {Product} from "./models/Product";
@@ -9,7 +9,9 @@ const alter = process.env.NODE_ENV === 'development';
 
 export const dbInit = async () => {
     await Category.sync({alter});
-    await ProductType.sync({alter});
+    await initDefaultCategories();
+    await ProductDimension.sync({alter});
+    await initProductDimensions();
     await City.sync({alter});
     await User.sync({alter});
     await Product.sync({alter});

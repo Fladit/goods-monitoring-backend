@@ -1,0 +1,24 @@
+import {TProductsNames} from "../../database/models/Product/productNames";
+import {PerekrestokResponse, VolumeProduct, WeightProduct} from "./productType";
+import {getWebContent} from "../../headless/getWebContent";
+import {ValueOf} from "../../types/ValueOf";
+import {parseResponseEntity} from "../utils/parseResponseEntity";
+import {getProductWithMedianPrice} from "../utils/getProductWithMedianPrice";
+import {ProductGroup} from "../../database/models/Product/types";
+
+interface GetProductProps {
+    productUrl: string; searchedRequestUrl: string; productGroupNames: Record<string, TProductsNames>;
+}
+
+export const getProduct = async ({productUrl, searchedRequestUrl, productGroupNames}: GetProductProps) => {
+    const productBody: PerekrestokResponse<VolumeProduct | WeightProduct> = await getWebContent({url: productUrl, searchedRequestUrl});
+    return productBody.content.items.reduce<Array<ProductGroup>>((acc, item) => {
+        const categoryName = item.group.key as ValueOf<typeof productGroupNames>;
+        if (categoryName in productGroupNames) {
+            const parsedItems = item.products.map(parseResponseEntity);
+            const medianPriceItem = getProductWithMedianPrice(parsedItems, 0);
+            acc.push({name: productGroupNames[categoryName], medianPriceItem})
+        }
+        return acc;
+    }, []);
+}
