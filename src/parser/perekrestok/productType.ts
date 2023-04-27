@@ -33,11 +33,11 @@ interface CommonProduct {
 }
 
 interface WeightProductData {
-        unit: number,
-        weight: number,
+        unit?: number,
+        weight?: number,
 }
 
 interface VolumeProductData {
-        unit: number,
-        volume: number,
+        unit?: number,
+        volume?: number,
 }

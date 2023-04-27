@@ -1,12 +1,18 @@
 import {ICommonProduct} from "../../database/models/Product/types";
 
-export const getProductWithMedianPrice = (products: Array<ICommonProduct>, zerosAfterDecimal = 0) => {
+export const getProductPriceInfo = (products: Array<ICommonProduct>, zerosAfterDecimal = 0) => {
     const productsMiddle = getMiddle(products.length);
     const handledProductsByValue:Array<ICommonProduct> = products.map(product => {
         const {value, price} = product;
         return {...product, value: 1000, price: + (price / value * 1000).toFixed(zerosAfterDecimal) } as ICommonProduct;
     })
-    return handledProductsByValue.sort((a, b) => a.price - b.price)[productsMiddle];
+    const sortedProducts = handledProductsByValue.sort((a, b) => a.price - b.price);
+
+    return {
+        minPrice: sortedProducts[0].price,
+        mediumPrice: sortedProducts[productsMiddle].price,
+        maxPrice: sortedProducts[handledProductsByValue.length - 1].price
+    }
 }
 
 function getMiddle (length: number) {

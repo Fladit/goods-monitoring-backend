@@ -19,9 +19,17 @@ Product.init({
         type: DataTypes.STRING(32),
         allowNull: false,
     },
-    price: {
-        type: DataTypes.INTEGER,
+    minPrice: {
+        type: DataTypes.FLOAT(8, 2),
+        //allowNull: false,
+    },
+    mediumPrice: {
+        type: DataTypes.FLOAT(8, 2),
         allowNull: false,
+    },
+    maxPrice: {
+        type: DataTypes.FLOAT(8, 2),
+        //allowNull: false,
     },
     createdAt: DataTypes.DATE,
     value: {

@@ -9,12 +9,27 @@ export const MILK_PRODUCTS =  {
     STERILIZOVANNOE: 'Стерилизованное'
 } as const;
 
-export type TProductsNames = ValueOf<typeof MILK_PRODUCTS>
+export const VEGETABLE_PRODUCTS = {
+    TOMATOES: 'Помидоры',
+    CUCUMBERS: 'Огурцы',
+    PEPPER: 'Перец',
+    POTATO: 'Картофель',
+    CARROT: 'Морковь',
+    ONION: 'Лук',
+    BEET: 'Свекла'
+} as const;
+
+export type TProductNamesRecord = typeof MILK_PRODUCTS | typeof VEGETABLE_PRODUCTS
 
 export interface IProductsByCategory {
     [CATEGORY_NAMES.MILK]: ValueOf<typeof MILK_PRODUCTS>;
+    [CATEGORY_NAMES.VEGETABLES]: ValueOf<typeof VEGETABLE_PRODUCTS>;
 }
 
 export interface IDimensionByCategory {
     [CATEGORY_NAMES.MILK]: typeof DIMENSION_NAMES['VOLUME'];
+    [CATEGORY_NAMES.VEGETABLES]: typeof DIMENSION_NAMES['WEIGHT'];
 }
+
+export type TProductsNames = ValueOf<IProductsByCategory>
+export type TProductGroupNames = Record<string, TProductsNames>;

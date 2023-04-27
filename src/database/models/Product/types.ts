@@ -6,7 +6,9 @@ import {TProductsNames} from "./productNames";
 export interface IProduct {
     id: number;
     name: TProductsNames;
-    price: number;
+    minPrice: number;
+    mediumPrice: number;
+    maxPrice: number;
     createdAt?: Date;
     value: number;
     categoryId: ForeignKey<Category['id']>
@@ -15,9 +17,15 @@ export interface IProduct {
 
 export interface IProductCreation extends Omit<IProduct, 'id' | 'createdAt'> {}
 
-export interface ICommonProduct extends Pick<IProductCreation, 'name' | 'price' | 'value'> {}
+export interface ICommonProduct {
+    name: IProduct['name'];
+    price: number;
+    value: number
+}
 
 export interface ProductGroup {
     name: TProductsNames;
-    medianPriceItem: ICommonProduct;
+    minPrice: number;
+    mediumPrice: number;
+    maxPrice: number;
 }

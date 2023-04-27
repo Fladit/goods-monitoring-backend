@@ -5,7 +5,8 @@ config();
 
 import {sequelize} from '../database/sequelize'
 import {dbInit} from "../database/dbInit";
-import {getMilk} from "../parser/perekrestok/milk/getMilk";
+import {uploadMilk} from "../parser/perekrestok/milk/uploadMilk";
+import {uploadVegetables} from "../parser/perekrestok/vegetables/uploadVegetables";
 
 const app = express();
 const PORT = process.env.NODE_PORT;
@@ -17,8 +18,14 @@ app.get('/', (req, res) => {
 })
 
 app.get('/milk', (req, res) => {
-    getMilk().then((milkBody) => {
+    uploadMilk().then((milkBody) => {
         res.send(milkBody);
+    })
+})
+
+app.get('/vegetables', (req, res) => {
+    uploadVegetables().then((vegetableBody) => {
+        res.send(vegetableBody);
     })
 })
 
