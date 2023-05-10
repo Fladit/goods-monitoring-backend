@@ -1,16 +1,21 @@
 import express from 'express'
 import {config} from 'dotenv';
 import { json } from 'body-parser'
+import cors from 'cors'
 config();
 
 import {sequelize} from '../database/sequelize'
 import {dbInit} from "../database/dbInit";
 import {uploadMilk} from "../parser/perekrestok/milk/uploadMilk";
 import {uploadVegetables} from "../parser/perekrestok/vegetables/uploadVegetables";
+import {ProductController} from "../controllers/ProductController";
+import {errorHandler} from "./middlewares/errorHandler";
+import {productsRouter} from "../routers/products";
 
 const app = express();
 const PORT = process.env.NODE_PORT;
 
+app.use(cors({origin: 'http://localhost:8080'}));
 app.use(json());
 
 app.get('/', (req, res) => {
@@ -24,10 +29,12 @@ app.get('/milk', (req, res) => {
 })
 
 app.get('/vegetables', (req, res) => {
-    uploadVegetables().then((vegetableBody) => {
-        res.send(vegetableBody);
+    uploadVegetables().then((vegetablesBody) => {
+        res.send(vegetablesBody);
     })
 })
+
+app.use('/products', productsRouter);
 
 dbInit().then(async () => {
     app.listen(PORT, async () => {
@@ -41,5 +48,7 @@ dbInit().then(async () => {
         }
     })
 })
+
+app.use(errorHandler)
 
 export default app;

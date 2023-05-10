@@ -4,6 +4,7 @@ import {DataTypes, Model} from "sequelize";
 import {sequelize} from "../../sequelize";
 import {IProductDimension, IProductDimensionCreation} from "./types";
 import {DIMENSION_NAMES} from "./dimension";
+import {Product} from "../Product";
 
 class ProductDimension extends Model<IProductDimension, IProductDimensionCreation> {
 }
@@ -19,7 +20,7 @@ ProductDimension.init({
         allowNull: false,
         unique: true,
     },
-}, {sequelize, modelName: 'productType', timestamps: false,})
+}, {sequelize, modelName: 'productDimension', timestamps: false,})
 
 const initProductDimensions = () => {
     return Promise.all(Object.values(DIMENSION_NAMES).map((dimensionName) => {

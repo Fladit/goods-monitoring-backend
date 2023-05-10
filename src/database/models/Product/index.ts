@@ -54,4 +54,7 @@ Product.init({
     }
 }, {sequelize, modelName: 'product'})
 
+Product.belongsTo(ProductDimension);
+Product.belongsTo(Category)
+
 export {Product};

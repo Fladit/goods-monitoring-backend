@@ -5,7 +5,7 @@ import {
     TProductGroupNames,
     TProductNamesRecord,
 } from "../../database/models/Product/productNames";
-import ProductService from "../../services/ProductService";
+import {ProductService} from "../../services/ProductService";
 import {TDimensionNames} from "../../database/models/ProductDimension/dimension";
 
 interface IUploadProductProps {
